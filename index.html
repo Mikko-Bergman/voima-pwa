@@ -9,14 +9,14 @@
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <title>Voimaohjelma – Treenipäiväkirja</title>
   <style>
-    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8}
+    :root{--text:#e5e7eb;--muted:#94a3b8}
     html,body{height:100%}
     body{margin:0;background:linear-gradient(180deg,#0b1220,#0a0f1a);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
     .wrap{max-width:1100px;margin:0 auto;padding:24px}
     h1{font-size:clamp(22px,3vw,30px);margin:0 0 8px}
     h2{font-size:clamp(18px,2.4vw,22px);margin:24px 0 8px}
     p,li,label,button,input,select{font-size:14px}
-    .card{background:rgba(17,24,39,.8);border:1px solid rgba(148,163,184,.2);border-radius:14px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    .card{background:rgba(17,24,39,.85);border:1px solid rgba(148,163,184,.2);border-radius:14px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
     .grid{display:grid;gap:12px}
     .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
     .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -27,19 +27,21 @@
     button.ghost{background:transparent;border-color:rgba(148,163,184,.35)}
     small{color:var(--muted)}
     table{width:100%;border-collapse:collapse}
-    th,td{padding:8px 10px;border-bottom:1px solid rgba(148,163,184,.15);text-align:left}
+    th,td{padding:8px 10px;border-bottom:1px solid rgba(148,163,184,.15);text-align:left;vertical-align:top}
     th{color:#cbd5e1;font-weight:600}
     tr.done td{opacity:.65;text-decoration:line-through}
     .pill{display:inline-block;padding:2px 8px;border-radius:999px;background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.35);color:#7dd3fc;font-size:12px}
     .right{display:flex;gap:8px;align-items:center;margin-left:auto}
     .footer{opacity:.8;margin-top:16px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
     textarea{width:100%;min-height:80px}
+    .subhead{margin-top:10px;margin-bottom:6px}
+    .w80{width:110px}
   </style>
 </head>
 <body>
   <div class="wrap">
     <h1>Voimaohjelma – sähköinen treenipäiväkirja (8 viikkoa)</h1>
-    <p class="pill">3-jakoinen: Ma Kyykky • Ke Penkki • Pe Mave — 5x5-painotus</p>
+    <p class="pill">3-jakoinen: Ma Kyykky • Ke Penkki • Pe Mave — pääliike + apuliikkeet</p>
 
     <div class="card grid">
       <h2>Asetukset & lähtötasot</h2>
@@ -79,7 +81,7 @@
     </div>
 
     <div class="footer">
-      <small>Ohje: 5x5 pääliikkeissä, lisää painoa 2.5–5 kg kun kaikki sarjat sujuvat. Mave: 4x4 → 5x3 → 6x2.</small>
+      <small>Ohje: lisää pääliikkeissä 2.5–5 kg kun kaikki sarjat sujuvat. Apuliikkeet: nosta maltillisesti (1–2.5 kg) tai lisää toistoja.</small>
       <small>PWA – toimii offline</small>
     </div>
   </div>
@@ -88,54 +90,189 @@
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 }
+
 const PCTS = [70, 75, 77.5, 80, 82.5, 85, 87.5, 90];
-const STORE_KEY = 'voima_diary_v1';
+const STORE_KEY = 'voima_diary_v2';
+
 const loadState = () => { try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch(e){ return {}; } };
 const saveState = (st) => localStorage.setItem(STORE_KEY, JSON.stringify(st));
+
 let state = loadState();
 if (!state.rms){ state.rms = { bench:100, squat:120, dead:120 }; }
 if (!state.rounding){ state.rounding = 2.5; }
 if (!state.completed){ state.completed = {}; }
+if (!state.accessory){ state.accessory = {}; }
 if (!state.notes){ state.notes = ''; }
+
 const roundTo = (x, step) => Math.round(x/step)*step;
 const pct = (x,p) => x*p/100;
 const dlScheme = (w) => (w<=2?'4 × 4':(w<=4?'5 × 3':'6 × 2'));
+
 const rmBench = document.getElementById('rmBench');
 const rmSquat = document.getElementById('rmSquat');
 const rmDead  = document.getElementById('rmDead');
 const rounding = document.getElementById('rounding');
 const plan = document.getElementById('plan');
 const notes = document.getElementById('notes');
+
 rmBench.value = state.rms.bench; rmSquat.value = state.rms.squat; rmDead.value = state.rms.dead;
 rounding.value = String(state.rounding); notes.value = state.notes;
+
 notes.addEventListener('input', ()=>{ state.notes = notes.value; saveState(state); });
-document.getElementById('reset').onclick = ()=>{ if (confirm('Nollataanko kaikki tallennettu data?')){ localStorage.removeItem(STORE_KEY); location.reload(); } };
-document.getElementById('recalc').onclick = ()=>{ state.rms = { bench:+rmBench.value, squat:+rmSquat.value, dead:+rmDead.value }; state.rounding = +rounding.value; saveState(state); render(); };
-document.getElementById('export').onclick = ()=>{ const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='treenipaivakirja.json'; a.click(); URL.revokeObjectURL(url); };
-document.getElementById('importFile').addEventListener('change',(e)=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ state=JSON.parse(r.result); saveState(state); render(); }catch{ alert('Virhe: ei voitu lukea tiedostoa.'); } }; r.readAsText(f); });
-const setDone=(w,k,v)=>{ state.completed[w]=state.completed[w]||{}; state.completed[w][k]=v; saveState(state); };
-const isDone=(w,k)=>!!(state.completed?.[w]?.[k]);
-function rowHtml(w,k,day,main,kg){ const id=`w${w}_${k}`; return `<tr data-id="${id}"><td>${day}</td><td>${main}</td><td><b>${kg}</b> kg</td><td><input id="${id}" type="checkbox"></td></tr>`; }
+
+document.getElementById('reset').onclick = ()=>{
+  if (confirm('Nollataanko kaikki tallennettu data?')){ localStorage.removeItem(STORE_KEY); location.reload(); }
+};
+document.getElementById('recalc').onclick = ()=>{
+  state.rms = { bench:+rmBench.value, squat:+rmSquat.value, dead:+rmDead.value };
+  state.rounding = +rounding.value;
+  saveState(state);
+  render();
+};
+
+document.getElementById('export').onclick = ()=>{
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='treenipaivakirja.json'; a.click();
+  URL.revokeObjectURL(url);
+};
+document.getElementById('importFile').addEventListener('change',(e)=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{ try{ state=JSON.parse(r.result); saveState(state); render(); }catch{ alert('Virhe: ei voitu lukea tiedostoa.'); } };
+  r.readAsText(f);
+});
+
+function setDoneMain(w, key, val){
+  state.completed[w] = state.completed[w] || {};
+  state.completed[w][key] = val;
+  saveState(state);
+}
+function isDoneMain(w, key){ return !!(state.completed?.[w]?.[key]); }
+
+function getAcc(w, dayKey, accKey){
+  state.accessory[w] = state.accessory[w] || {};
+  state.accessory[w][dayKey] = state.accessory[w][dayKey] || {};
+  state.accessory[w][dayKey][accKey] = state.accessory[w][dayKey][accKey] || { kg:'', done:false, note:'' };
+  return state.accessory[w][dayKey][accKey];
+}
+function setAcc(w, dayKey, accKey, patch){
+  Object.assign(getAcc(w, dayKey, accKey), patch);
+  saveState(state);
+}
+
+const ACCESSORIES = {
+  squat: [
+    { key:'front', name:'Etukyykky', sets:'3 × 5', suggest:(rms,round)=> roundTo(pct(rms.squat,70),round), hint:'~70% kyykyn 1RM:stä' },
+    { key:'rdl',   name:'Romanian DL', sets:'3 × 8', suggest:(rms,round)=> roundTo(pct(rms.dead,60),round),  hint:'~60% maven 1RM:stä' },
+    { key:'calf',  name:'Pohkeet', sets:'3 × 15–20', suggest:()=> '', hint:'valitse sopiva' },
+  ],
+  bench: [
+    { key:'cgbp', name:'Kapea penkki', sets:'3 × 5', suggest:(rms,round)=> roundTo(pct(rms.bench,70),round), hint:'~70% penkin 1RM:stä' },
+    { key:'ohp',  name:'Pystypunnerrus', sets:'3 × 6–8', suggest:(rms,round)=> roundTo(pct(rms.bench,55),round), hint:'~55% penkin 1RM:stä (suuntaa-antava)' },
+    { key:'dips', name:'Dippi', sets:'3 × 8–10', suggest:()=> '', hint:'lisäpaino jos helppo' },
+  ],
+  dead: [
+    { key:'row',  name:'Kulmasoutu', sets:'3 × 6–8', suggest:()=> '', hint:'raskas, hyvä tekniikka' },
+    { key:'pull', name:'Leuanveto', sets:'4 × max / 4 × 5', suggest:()=> '', hint:'lisäpaino jos helppo' },
+    { key:'core', name:'Keskivartalo', sets:'3 × 15', suggest:()=> '', hint:'esim. ab wheel / rutistus' },
+  ]
+};
+
+function rowMainHtml(w,k,day,main,kg){
+  const id=`w${w}_${k}`;
+  return `<tr data-id="${id}"><td>${day}</td><td>${main}</td><td><b>${kg}</b> kg</td><td><input id="${id}" type="checkbox"></td></tr>`;
+}
+
+function renderAccessoryTable(w, dayKey, rms, round){
+  const accs = ACCESSORIES[dayKey];
+  let rows = '';
+  for (const a of accs){
+    const accId = `a_${w}_${dayKey}_${a.key}`;
+    const sug = a.suggest(rms, round);
+    const sugText = (sug === '' ? '—' : `${sug} kg`);
+    rows += `
+      <tr>
+        <td><b>${a.name}</b><br><small>${a.sets} • ${a.hint}</small></td>
+        <td>${sugText}</td>
+        <td><input class="w80" inputmode="decimal" pattern="[0-9.,]*" id="${accId}_kg" placeholder="kg"></td>
+        <td><input id="${accId}_done" type="checkbox"></td>
+      </tr>
+      <tr>
+        <td colspan="4"><small>Muistiinpano:</small><br><textarea id="${accId}_note" placeholder="esim. RPE, toistot, tekniikka…"></textarea></td>
+      </tr>`;
+  }
+  return `
+    <div class="subhead"><small class="pill">Apuliikkeet – ${dayKey.toUpperCase()}</small></div>
+    <table>
+      <thead><tr><th>Liike</th><th>Suositus</th><th>Tehty (kg)</th><th>Valmis</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+function bindAccessoryInputs(w, dayKey){
+  const accs = ACCESSORIES[dayKey];
+  for (const a of accs){
+    const accId = `a_${w}_${dayKey}_${a.key}`;
+    const st = getAcc(w, dayKey, a.key);
+
+    const kgEl = document.getElementById(`${accId}_kg`);
+    const doneEl = document.getElementById(`${accId}_done`);
+    const noteEl = document.getElementById(`${accId}_note`);
+
+    kgEl.value = st.kg ?? '';
+    doneEl.checked = !!st.done;
+    noteEl.value = st.note ?? '';
+
+    kgEl.addEventListener('input', ()=> setAcc(w,dayKey,a.key,{kg:kgEl.value}));
+    doneEl.addEventListener('change', ()=> setAcc(w,dayKey,a.key,{done:doneEl.checked}));
+    noteEl.addEventListener('input', ()=> setAcc(w,dayKey,a.key,{note:noteEl.value}));
+  }
+}
+
 function render(){
   plan.innerHTML='';
   const round=state.rounding||2.5, rms=state.rms;
+
   for(let w=1; w<=8; w++){
     const p=PCTS[w-1];
     const squatW=roundTo(pct(rms.squat,p),round), benchW=roundTo(pct(rms.bench,p),round), deadW=roundTo(pct(rms.dead,p),round);
+
     const card=document.createElement('div'); card.className='card';
-    const h=document.createElement('div'); h.className='row'; h.innerHTML=`<h2>Viikko ${w} <small class="pill">${p}%</small></h2>`; card.appendChild(h);
+    const h=document.createElement('div'); h.className='row';
+    h.innerHTML=`<h2>Viikko ${w} <small class="pill">${p}%</small></h2>`;
+    card.appendChild(h);
+
     const tbl=document.createElement('table');
     tbl.innerHTML=`<thead><tr><th>Päivä</th><th>Pääliike</th><th>Tavoitepaino</th><th>Valmis</th></tr></thead><tbody>
-      ${rowHtml(w,'squat','Ma – Kyykky','Takakyykky 5 × 5',squatW)}
-      ${rowHtml(w,'bench','Ke – Penkki','Penkki 5 × 5',benchW)}
-      ${rowHtml(w,'dead','Pe – Mave',`Maastaveto ${dlScheme(w)}`,deadW)}
+      ${rowMainHtml(w,'squat','Ma – Kyykky','Takakyykky 5 × 5',squatW)}
+      ${rowMainHtml(w,'bench','Ke – Penkki','Penkki 5 × 5',benchW)}
+      ${rowMainHtml(w,'dead','Pe – Mave',`Maastaveto ${dlScheme(w)}`,deadW)}
     </tbody>`;
-    card.appendChild(tbl); plan.appendChild(card);
+    card.appendChild(tbl);
+
+    const accWrap = document.createElement('div');
+    accWrap.innerHTML = `
+      ${renderAccessoryTable(w,'squat',rms,round)}
+      ${renderAccessoryTable(w,'bench',rms,round)}
+      ${renderAccessoryTable(w,'dead',rms,round)}
+    `;
+    card.appendChild(accWrap);
+
+    plan.appendChild(card);
+
     for(const k of ['squat','bench','dead']){
-      const id=`w${w}_${k}`; const cb=card.querySelector(`#${id}`); const tr=card.querySelector(`tr[data-id="${id}"]`);
-      cb.checked=isDone(w,k); tr.classList.toggle('done',cb.checked);
-      cb.addEventListener('change',()=>{ setDone(w,k,cb.checked); tr.classList.toggle('done',cb.checked); });
+      const id=`w${w}_${k}`;
+      const cb=card.querySelector(`#${id}`);
+      const tr=card.querySelector(`tr[data-id="${id}"]`);
+      cb.checked=isDoneMain(w,k);
+      tr.classList.toggle('done',cb.checked);
+      cb.addEventListener('change',()=>{ setDoneMain(w,k,cb.checked); tr.classList.toggle('done',cb.checked); });
     }
+
+    bindAccessoryInputs(w,'squat');
+    bindAccessoryInputs(w,'bench');
+    bindAccessoryInputs(w,'dead');
   }
 }
 render();
