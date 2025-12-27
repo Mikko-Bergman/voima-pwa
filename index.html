@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <title>Voimaohjelma – Treenipäiväkirja</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8}
+    html,body{height:100%}
+    body{margin:0;background:linear-gradient(180deg,#0b1220,#0a0f1a);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    h1{font-size:clamp(22px,3vw,30px);margin:0 0 8px}
+    h2{font-size:clamp(18px,2.4vw,22px);margin:24px 0 8px}
+    p,li,label,button,input,select{font-size:14px}
+    .card{background:rgba(17,24,39,.8);border:1px solid rgba(148,163,184,.2);border-radius:14px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    .grid{display:grid;gap:12px}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    input[type="number"],select,button,textarea{background:#0b1220;border:1px solid rgba(148,163,184,.25);color:var(--text);padding:10px 12px;border-radius:10px;outline:none}
+    input[type="checkbox"]{width:16px;height:16px}
+    button{cursor:pointer}
+    button.primary{background:linear-gradient(135deg,#06b6d4,#22d3ee);border:none;color:#001018;font-weight:700}
+    button.ghost{background:transparent;border-color:rgba(148,163,184,.35)}
+    small{color:var(--muted)}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:8px 10px;border-bottom:1px solid rgba(148,163,184,.15);text-align:left}
+    th{color:#cbd5e1;font-weight:600}
+    tr.done td{opacity:.65;text-decoration:line-through}
+    .pill{display:inline-block;padding:2px 8px;border-radius:999px;background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.35);color:#7dd3fc;font-size:12px}
+    .right{display:flex;gap:8px;align-items:center;margin-left:auto}
+    .footer{opacity:.8;margin-top:16px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+    textarea{width:100%;min-height:80px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Voimaohjelma – sähköinen treenipäiväkirja (8 viikkoa)</h1>
+    <p class="pill">3-jakoinen: Ma Kyykky • Ke Penkki • Pe Mave — 5x5-painotus</p>
+
+    <div class="card grid">
+      <h2>Asetukset & lähtötasot</h2>
+      <div class="grid grid-3">
+        <label>Penkin 1RM (kg)<input type="number" id="rmBench" min="20" step="2.5" /></label>
+        <label>Kyykyn 1RM (kg)<input type="number" id="rmSquat" min="20" step="2.5" /></label>
+        <label>Maven 1RM (kg)<input type="number" id="rmDead" min="20" step="2.5" /></label>
+      </div>
+      <div class="row">
+        <label>Pyöristys (kg)
+          <select id="rounding">
+            <option value="2.5">2.5 kg</option>
+            <option value="1.25">1.25 kg</option>
+            <option value="5">5 kg</option>
+          </select>
+        </label>
+        <div class="right">
+          <button class="ghost" id="reset">Nollaa data</button>
+          <button class="primary" id="recalc">Laske viikkopainot</button>
+        </div>
+      </div>
+      <small>Data tallentuu laitteeseen (localStorage). Varmuuskopioi JSON:lla.</small>
+    </div>
+
+    <div id="plan" class="grid" style="margin-top:16px"></div>
+
+    <div class="card" style="margin-top:16px">
+      <h2>Muistiinpanot</h2>
+      <textarea id="notes" placeholder="Kirjoita fiilikset, RPE:t, tekniikkahuomiot…"></textarea>
+      <div class="row footer">
+        <div class="row">
+          <button class="ghost" id="export">Vie JSON</button>
+          <input type="file" id="importFile" accept="application/json" />
+        </div>
+        <small>Export/Import = varmuuskopio & siirto toiseen laitteeseen.</small>
+      </div>
+    </div>
+
+    <div class="footer">
+      <small>Ohje: 5x5 pääliikkeissä, lisää painoa 2.5–5 kg kun kaikki sarjat sujuvat. Mave: 4x4 → 5x3 → 6x2.</small>
+      <small>PWA – toimii offline</small>
+    </div>
+  </div>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
+const PCTS = [70, 75, 77.5, 80, 82.5, 85, 87.5, 90];
+const STORE_KEY = 'voima_diary_v1';
+const loadState = () => { try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch(e){ return {}; } };
+const saveState = (st) => localStorage.setItem(STORE_KEY, JSON.stringify(st));
+let state = loadState();
+if (!state.rms){ state.rms = { bench:100, squat:120, dead:120 }; }
+if (!state.rounding){ state.rounding = 2.5; }
+if (!state.completed){ state.completed = {}; }
+if (!state.notes){ state.notes = ''; }
+const roundTo = (x, step) => Math.round(x/step)*step;
+const pct = (x,p) => x*p/100;
+const dlScheme = (w) => (w<=2?'4 × 4':(w<=4?'5 × 3':'6 × 2'));
+const rmBench = document.getElementById('rmBench');
+const rmSquat = document.getElementById('rmSquat');
+const rmDead  = document.getElementById('rmDead');
+const rounding = document.getElementById('rounding');
+const plan = document.getElementById('plan');
+const notes = document.getElementById('notes');
+rmBench.value = state.rms.bench; rmSquat.value = state.rms.squat; rmDead.value = state.rms.dead;
+rounding.value = String(state.rounding); notes.value = state.notes;
+notes.addEventListener('input', ()=>{ state.notes = notes.value; saveState(state); });
+document.getElementById('reset').onclick = ()=>{ if (confirm('Nollataanko kaikki tallennettu data?')){ localStorage.removeItem(STORE_KEY); location.reload(); } };
+document.getElementById('recalc').onclick = ()=>{ state.rms = { bench:+rmBench.value, squat:+rmSquat.value, dead:+rmDead.value }; state.rounding = +rounding.value; saveState(state); render(); };
+document.getElementById('export').onclick = ()=>{ const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='treenipaivakirja.json'; a.click(); URL.revokeObjectURL(url); };
+document.getElementById('importFile').addEventListener('change',(e)=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ state=JSON.parse(r.result); saveState(state); render(); }catch{ alert('Virhe: ei voitu lukea tiedostoa.'); } }; r.readAsText(f); });
+const setDone=(w,k,v)=>{ state.completed[w]=state.completed[w]||{}; state.completed[w][k]=v; saveState(state); };
+const isDone=(w,k)=>!!(state.completed?.[w]?.[k]);
+function rowHtml(w,k,day,main,kg){ const id=`w${w}_${k}`; return `<tr data-id="${id}"><td>${day}</td><td>${main}</td><td><b>${kg}</b> kg</td><td><input id="${id}" type="checkbox"></td></tr>`; }
+function render(){
+  plan.innerHTML='';
+  const round=state.rounding||2.5, rms=state.rms;
+  for(let w=1; w<=8; w++){
+    const p=PCTS[w-1];
+    const squatW=roundTo(pct(rms.squat,p),round), benchW=roundTo(pct(rms.bench,p),round), deadW=roundTo(pct(rms.dead,p),round);
+    const card=document.createElement('div'); card.className='card';
+    const h=document.createElement('div'); h.className='row'; h.innerHTML=`<h2>Viikko ${w} <small class="pill">${p}%</small></h2>`; card.appendChild(h);
+    const tbl=document.createElement('table');
+    tbl.innerHTML=`<thead><tr><th>Päivä</th><th>Pääliike</th><th>Tavoitepaino</th><th>Valmis</th></tr></thead><tbody>
+      ${rowHtml(w,'squat','Ma – Kyykky','Takakyykky 5 × 5',squatW)}
+      ${rowHtml(w,'bench','Ke – Penkki','Penkki 5 × 5',benchW)}
+      ${rowHtml(w,'dead','Pe – Mave',`Maastaveto ${dlScheme(w)}`,deadW)}
+    </tbody>`;
+    card.appendChild(tbl); plan.appendChild(card);
+    for(const k of ['squat','bench','dead']){
+      const id=`w${w}_${k}`; const cb=card.querySelector(`#${id}`); const tr=card.querySelector(`tr[data-id="${id}"]`);
+      cb.checked=isDone(w,k); tr.classList.toggle('done',cb.checked);
+      cb.addEventListener('change',()=>{ setDone(w,k,cb.checked); tr.classList.toggle('done',cb.checked); });
+    }
+  }
+}
+render();
+</script>
+</body>
+</html>
