@@ -2,7 +2,7 @@
 <html lang="fi">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0f172a" />
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
@@ -11,31 +11,55 @@
   <style>
     :root{--text:#e5e7eb;--muted:#94a3b8}
     html,body{height:100%}
-    body{margin:0;background:linear-gradient(180deg,#0b1220,#0a0f1a);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#0b1220,#0a0f1a);
+      color:var(--text);
+      font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
     .wrap{max-width:1100px;margin:0 auto;padding:24px}
-    h1{font-size:clamp(22px,3vw,30px);margin:0 0 8px}
-    h2{font-size:clamp(18px,2.4vw,22px);margin:24px 0 8px}
+    h1{font-size:clamp(20px,5vw,30px);margin:0 0 8px}
+    h2{font-size:clamp(16px,4.5vw,22px);margin:18px 0 8px}
     p,li,label,button,input,select{font-size:14px}
     .card{background:rgba(17,24,39,.85);border:1px solid rgba(148,163,184,.2);border-radius:14px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
     .grid{display:grid;gap:12px}
     .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
     .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-    input[type="number"],select,button,textarea{background:#0b1220;border:1px solid rgba(148,163,184,.25);color:var(--text);padding:10px 12px;border-radius:10px;outline:none}
-    input[type="checkbox"]{width:16px;height:16px}
+    input[type="number"],select,button,textarea{
+      background:#0b1220;border:1px solid rgba(148,163,184,.25);
+      color:var(--text);padding:10px 12px;border-radius:10px;outline:none
+    }
+    input[type="number"]{width:100%}
+    input[type="checkbox"]{width:18px;height:18px}
     button{cursor:pointer}
     button.primary{background:linear-gradient(135deg,#06b6d4,#22d3ee);border:none;color:#001018;font-weight:700}
     button.ghost{background:transparent;border-color:rgba(148,163,184,.35)}
     small{color:var(--muted)}
-    table{width:100%;border-collapse:collapse}
+    .pill{display:inline-block;padding:2px 8px;border-radius:999px;background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.35);color:#7dd3fc;font-size:12px}
+    .right{display:flex;gap:8px;align-items:center;margin-left:auto}
+    .footer{opacity:.85;margin-top:16px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+    textarea{width:100%;min-height:80px;resize:vertical}
+    .subhead{margin-top:12px;margin-bottom:6px}
+    .w80{width:110px;max-width:40vw}
+
+    /* Tables: make scrollable on small screens */
+    .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px}
+    table{width:100%;border-collapse:collapse;min-width:520px}
     th,td{padding:8px 10px;border-bottom:1px solid rgba(148,163,184,.15);text-align:left;vertical-align:top}
     th{color:#cbd5e1;font-weight:600}
     tr.done td{opacity:.65;text-decoration:line-through}
-    .pill{display:inline-block;padding:2px 8px;border-radius:999px;background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.35);color:#7dd3fc;font-size:12px}
-    .right{display:flex;gap:8px;align-items:center;margin-left:auto}
-    .footer{opacity:.8;margin-top:16px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
-    textarea{width:100%;min-height:80px}
-    .subhead{margin-top:10px;margin-bottom:6px}
-    .w80{width:110px}
+
+    /* Mobile tweaks */
+    @media (max-width: 640px){
+      .wrap{padding:14px}
+      .card{padding:12px}
+      .grid-3{grid-template-columns:1fr}
+      .right{width:100%;justify-content:flex-start;margin-left:0}
+      table{min-width:620px} /* ensure horizontal scroll rather than squash */
+      th,td{padding:7px 8px}
+      .w80{width:92px}
+    }
   </style>
 </head>
 <body>
@@ -63,7 +87,7 @@
           <button class="primary" id="recalc">Laske viikkopainot</button>
         </div>
       </div>
-      <small>Data tallentuu laitteeseen (localStorage). Varmuuskopioi JSON:lla.</small>
+      <small>iPhone-vinkki: taulukot rullaavat sivusuunnassa (swipe). Data tallentuu laitteeseen.</small>
     </div>
 
     <div id="plan" class="grid" style="margin-top:16px"></div>
@@ -92,7 +116,7 @@ if ('serviceWorker' in navigator) {
 }
 
 const PCTS = [70, 75, 77.5, 80, 82.5, 85, 87.5, 90];
-const STORE_KEY = 'voima_diary_v2';
+const STORE_KEY = 'voima_diary_v3';
 
 const loadState = () => { try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch(e){ return {}; } };
 const saveState = (st) => localStorage.setItem(STORE_KEY, JSON.stringify(st));
@@ -204,10 +228,12 @@ function renderAccessoryTable(w, dayKey, rms, round){
   }
   return `
     <div class="subhead"><small class="pill">Apuliikkeet – ${dayKey.toUpperCase()}</small></div>
-    <table>
-      <thead><tr><th>Liike</th><th>Suositus</th><th>Tehty (kg)</th><th>Valmis</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table>`;
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Liike</th><th>Suositus</th><th>Tehty (kg)</th><th>Valmis</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
 }
 
 function bindAccessoryInputs(w, dayKey){
@@ -243,13 +269,16 @@ function render(){
     h.innerHTML=`<h2>Viikko ${w} <small class="pill">${p}%</small></h2>`;
     card.appendChild(h);
 
+    const mainWrap = document.createElement('div');
+    mainWrap.className = 'table-wrap';
     const tbl=document.createElement('table');
     tbl.innerHTML=`<thead><tr><th>Päivä</th><th>Pääliike</th><th>Tavoitepaino</th><th>Valmis</th></tr></thead><tbody>
       ${rowMainHtml(w,'squat','Ma – Kyykky','Takakyykky 5 × 5',squatW)}
       ${rowMainHtml(w,'bench','Ke – Penkki','Penkki 5 × 5',benchW)}
       ${rowMainHtml(w,'dead','Pe – Mave',`Maastaveto ${dlScheme(w)}`,deadW)}
     </tbody>`;
-    card.appendChild(tbl);
+    mainWrap.appendChild(tbl);
+    card.appendChild(mainWrap);
 
     const accWrap = document.createElement('div');
     accWrap.innerHTML = `
@@ -258,7 +287,6 @@ function render(){
       ${renderAccessoryTable(w,'dead',rms,round)}
     `;
     card.appendChild(accWrap);
-
     plan.appendChild(card);
 
     for(const k of ['squat','bench','dead']){
