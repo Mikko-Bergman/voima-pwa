@@ -1,0 +1,1202 @@
+{
+  "meta": {
+    "name": "Mikko – 3-jakoinen Powerbuilding (8 viikkoa)",
+    "created": "2026-03-02",
+    "days": {
+      "squat": "Ma",
+      "bench": "Ke",
+      "dead": "Pe"
+    },
+    "notes": "Aloita viikosta 1. Kun kaikki 3 treeniä tehty, siirry seuraavaan viikkoon (activeWeek++)."
+  },
+  "rounding": 2.5,
+  "programLength": 8,
+  "activeWeek": 1,
+  "weeks": {
+    "1": {
+      "visible": true,
+      "done": {
+        "squat": false,
+        "bench": false,
+        "dead": false
+      },
+      "main": {
+        "squat": {
+          "day": "Ma",
+          "lift": "Takakyykky",
+          "sets": "5x5",
+          "targetKg": 100
+        },
+        "bench": {
+          "day": "Ke",
+          "lift": "Penkkipunnerrus",
+          "sets": "5x5",
+          "targetKg": 85
+        },
+        "dead": {
+          "day": "Pe",
+          "lift": "Maastaveto",
+          "sets": "4x4",
+          "targetKg": 100
+        }
+      },
+      "accessory": {
+        "squatDay": [
+          {
+            "name": "Etukyykky",
+            "sets": "3x6",
+            "targetKg": 70.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Romanian DL",
+            "sets": "3x8",
+            "targetKg": 80.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Pohkeet",
+            "sets": "4x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisää painoa kun saat kaikki toistot puhtaasti"
+          },
+          {
+            "name": "Core",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Esim. ab wheel / lankku"
+          }
+        ],
+        "benchDay": [
+          {
+            "name": "Vinopenkki käsipainoilla",
+            "sets": "3x8-10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisää toistoja tai painoa viikoittain"
+          },
+          {
+            "name": "Kapea penkki",
+            "sets": "3x5",
+            "targetKg": 75.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Pystypunnerrus",
+            "sets": "3x6-8",
+            "targetKg": 55.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Dippi",
+            "sets": "3x8-10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisäpaino jos 10 toistoa onnistuu"
+          },
+          {
+            "name": "Sivuviparit",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          }
+        ],
+        "deadDay": [
+          {
+            "name": "Kulmasoutu",
+            "sets": "4x6-8",
+            "targetKg": 70.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Leuanveto",
+            "sets": "4xmax",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisäpaino jos 8+ toistoa"
+          },
+          {
+            "name": "Selän ojennus",
+            "sets": "3x12",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Hauis",
+            "sets": "3x10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Core",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          }
+        ]
+      }
+    },
+    "2": {
+      "visible": false,
+      "done": {
+        "squat": false,
+        "bench": false,
+        "dead": false
+      },
+      "main": {
+        "squat": {
+          "day": "Ma",
+          "lift": "Takakyykky",
+          "sets": "5x5",
+          "targetKg": 102.5
+        },
+        "bench": {
+          "day": "Ke",
+          "lift": "Penkkipunnerrus",
+          "sets": "5x5",
+          "targetKg": 87.5
+        },
+        "dead": {
+          "day": "Pe",
+          "lift": "Maastaveto",
+          "sets": "4x4",
+          "targetKg": 102.5
+        }
+      },
+      "accessory": {
+        "squatDay": [
+          {
+            "name": "Etukyykky",
+            "sets": "3x6",
+            "targetKg": 70.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Romanian DL",
+            "sets": "3x8",
+            "targetKg": 80.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Pohkeet",
+            "sets": "4x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisää painoa kun saat kaikki toistot puhtaasti"
+          },
+          {
+            "name": "Core",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Esim. ab wheel / lankku"
+          }
+        ],
+        "benchDay": [
+          {
+            "name": "Vinopenkki käsipainoilla",
+            "sets": "3x8-10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisää toistoja tai painoa viikoittain"
+          },
+          {
+            "name": "Kapea penkki",
+            "sets": "3x5",
+            "targetKg": 75.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Pystypunnerrus",
+            "sets": "3x6-8",
+            "targetKg": 55.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Dippi",
+            "sets": "3x8-10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisäpaino jos 10 toistoa onnistuu"
+          },
+          {
+            "name": "Sivuviparit",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          }
+        ],
+        "deadDay": [
+          {
+            "name": "Kulmasoutu",
+            "sets": "4x6-8",
+            "targetKg": 70.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Leuanveto",
+            "sets": "4xmax",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisäpaino jos 8+ toistoa"
+          },
+          {
+            "name": "Selän ojennus",
+            "sets": "3x12",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Hauis",
+            "sets": "3x10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Core",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          }
+        ]
+      }
+    },
+    "3": {
+      "visible": false,
+      "done": {
+        "squat": false,
+        "bench": false,
+        "dead": false
+      },
+      "main": {
+        "squat": {
+          "day": "Ma",
+          "lift": "Takakyykky",
+          "sets": "5x5",
+          "targetKg": 105
+        },
+        "bench": {
+          "day": "Ke",
+          "lift": "Penkkipunnerrus",
+          "sets": "5x5",
+          "targetKg": 90
+        },
+        "dead": {
+          "day": "Pe",
+          "lift": "Maastaveto",
+          "sets": "4x4",
+          "targetKg": 105
+        }
+      },
+      "accessory": {
+        "squatDay": [
+          {
+            "name": "Etukyykky",
+            "sets": "3x6",
+            "targetKg": 70.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Romanian DL",
+            "sets": "3x8",
+            "targetKg": 80.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Pohkeet",
+            "sets": "4x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisää painoa kun saat kaikki toistot puhtaasti"
+          },
+          {
+            "name": "Core",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Esim. ab wheel / lankku"
+          }
+        ],
+        "benchDay": [
+          {
+            "name": "Vinopenkki käsipainoilla",
+            "sets": "3x8-10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisää toistoja tai painoa viikoittain"
+          },
+          {
+            "name": "Kapea penkki",
+            "sets": "3x5",
+            "targetKg": 75.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Pystypunnerrus",
+            "sets": "3x6-8",
+            "targetKg": 55.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Dippi",
+            "sets": "3x8-10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisäpaino jos 10 toistoa onnistuu"
+          },
+          {
+            "name": "Sivuviparit",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          }
+        ],
+        "deadDay": [
+          {
+            "name": "Kulmasoutu",
+            "sets": "4x6-8",
+            "targetKg": 70.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Leuanveto",
+            "sets": "4xmax",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisäpaino jos 8+ toistoa"
+          },
+          {
+            "name": "Selän ojennus",
+            "sets": "3x12",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Hauis",
+            "sets": "3x10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Core",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          }
+        ]
+      }
+    },
+    "4": {
+      "visible": false,
+      "done": {
+        "squat": false,
+        "bench": false,
+        "dead": false
+      },
+      "main": {
+        "squat": {
+          "day": "Ma",
+          "lift": "Takakyykky",
+          "sets": "4x4",
+          "targetKg": 107.5
+        },
+        "bench": {
+          "day": "Ke",
+          "lift": "Penkkipunnerrus",
+          "sets": "4x4",
+          "targetKg": 92.5
+        },
+        "dead": {
+          "day": "Pe",
+          "lift": "Maastaveto",
+          "sets": "5x3",
+          "targetKg": 107.5
+        }
+      },
+      "accessory": {
+        "squatDay": [
+          {
+            "name": "Etukyykky",
+            "sets": "3x6",
+            "targetKg": 70.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Romanian DL",
+            "sets": "3x8",
+            "targetKg": 80.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Pohkeet",
+            "sets": "4x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisää painoa kun saat kaikki toistot puhtaasti"
+          },
+          {
+            "name": "Core",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Esim. ab wheel / lankku"
+          }
+        ],
+        "benchDay": [
+          {
+            "name": "Vinopenkki käsipainoilla",
+            "sets": "3x8-10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisää toistoja tai painoa viikoittain"
+          },
+          {
+            "name": "Kapea penkki",
+            "sets": "3x5",
+            "targetKg": 75.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Pystypunnerrus",
+            "sets": "3x6-8",
+            "targetKg": 55.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Dippi",
+            "sets": "3x8-10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisäpaino jos 10 toistoa onnistuu"
+          },
+          {
+            "name": "Sivuviparit",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          }
+        ],
+        "deadDay": [
+          {
+            "name": "Kulmasoutu",
+            "sets": "4x6-8",
+            "targetKg": 70.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Leuanveto",
+            "sets": "4xmax",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisäpaino jos 8+ toistoa"
+          },
+          {
+            "name": "Selän ojennus",
+            "sets": "3x12",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Hauis",
+            "sets": "3x10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Core",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          }
+        ]
+      }
+    },
+    "5": {
+      "visible": false,
+      "done": {
+        "squat": false,
+        "bench": false,
+        "dead": false
+      },
+      "main": {
+        "squat": {
+          "day": "Ma",
+          "lift": "Takakyykky",
+          "sets": "4x4",
+          "targetKg": 110
+        },
+        "bench": {
+          "day": "Ke",
+          "lift": "Penkkipunnerrus",
+          "sets": "4x4",
+          "targetKg": 95
+        },
+        "dead": {
+          "day": "Pe",
+          "lift": "Maastaveto",
+          "sets": "5x3",
+          "targetKg": 110
+        }
+      },
+      "accessory": {
+        "squatDay": [
+          {
+            "name": "Etukyykky",
+            "sets": "3x6",
+            "targetKg": 70.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Romanian DL",
+            "sets": "3x8",
+            "targetKg": 80.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Pohkeet",
+            "sets": "4x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisää painoa kun saat kaikki toistot puhtaasti"
+          },
+          {
+            "name": "Core",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Esim. ab wheel / lankku"
+          }
+        ],
+        "benchDay": [
+          {
+            "name": "Vinopenkki käsipainoilla",
+            "sets": "3x8-10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisää toistoja tai painoa viikoittain"
+          },
+          {
+            "name": "Kapea penkki",
+            "sets": "3x5",
+            "targetKg": 75.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Pystypunnerrus",
+            "sets": "3x6-8",
+            "targetKg": 55.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Dippi",
+            "sets": "3x8-10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisäpaino jos 10 toistoa onnistuu"
+          },
+          {
+            "name": "Sivuviparit",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          }
+        ],
+        "deadDay": [
+          {
+            "name": "Kulmasoutu",
+            "sets": "4x6-8",
+            "targetKg": 70.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Leuanveto",
+            "sets": "4xmax",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisäpaino jos 8+ toistoa"
+          },
+          {
+            "name": "Selän ojennus",
+            "sets": "3x12",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Hauis",
+            "sets": "3x10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Core",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          }
+        ]
+      }
+    },
+    "6": {
+      "visible": false,
+      "done": {
+        "squat": false,
+        "bench": false,
+        "dead": false
+      },
+      "main": {
+        "squat": {
+          "day": "Ma",
+          "lift": "Takakyykky",
+          "sets": "4x4",
+          "targetKg": 112.5
+        },
+        "bench": {
+          "day": "Ke",
+          "lift": "Penkkipunnerrus",
+          "sets": "4x4",
+          "targetKg": 97.5
+        },
+        "dead": {
+          "day": "Pe",
+          "lift": "Maastaveto",
+          "sets": "5x3",
+          "targetKg": 112.5
+        }
+      },
+      "accessory": {
+        "squatDay": [
+          {
+            "name": "Etukyykky",
+            "sets": "3x6",
+            "targetKg": 70.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Romanian DL",
+            "sets": "3x8",
+            "targetKg": 80.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Pohkeet",
+            "sets": "4x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisää painoa kun saat kaikki toistot puhtaasti"
+          },
+          {
+            "name": "Core",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Esim. ab wheel / lankku"
+          }
+        ],
+        "benchDay": [
+          {
+            "name": "Vinopenkki käsipainoilla",
+            "sets": "3x8-10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisää toistoja tai painoa viikoittain"
+          },
+          {
+            "name": "Kapea penkki",
+            "sets": "3x5",
+            "targetKg": 75.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Pystypunnerrus",
+            "sets": "3x6-8",
+            "targetKg": 55.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Dippi",
+            "sets": "3x8-10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisäpaino jos 10 toistoa onnistuu"
+          },
+          {
+            "name": "Sivuviparit",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          }
+        ],
+        "deadDay": [
+          {
+            "name": "Kulmasoutu",
+            "sets": "4x6-8",
+            "targetKg": 70.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Leuanveto",
+            "sets": "4xmax",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisäpaino jos 8+ toistoa"
+          },
+          {
+            "name": "Selän ojennus",
+            "sets": "3x12",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Hauis",
+            "sets": "3x10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Core",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          }
+        ]
+      }
+    },
+    "7": {
+      "visible": false,
+      "done": {
+        "squat": false,
+        "bench": false,
+        "dead": false
+      },
+      "main": {
+        "squat": {
+          "day": "Ma",
+          "lift": "Takakyykky",
+          "sets": "5x3",
+          "targetKg": 115
+        },
+        "bench": {
+          "day": "Ke",
+          "lift": "Penkkipunnerrus",
+          "sets": "5x3",
+          "targetKg": 100
+        },
+        "dead": {
+          "day": "Pe",
+          "lift": "Maastaveto",
+          "sets": "6x2",
+          "targetKg": 115
+        }
+      },
+      "accessory": {
+        "squatDay": [
+          {
+            "name": "Etukyykky",
+            "sets": "3x6",
+            "targetKg": 70.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Romanian DL",
+            "sets": "3x8",
+            "targetKg": 80.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Pohkeet",
+            "sets": "4x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisää painoa kun saat kaikki toistot puhtaasti"
+          },
+          {
+            "name": "Core",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Esim. ab wheel / lankku"
+          }
+        ],
+        "benchDay": [
+          {
+            "name": "Vinopenkki käsipainoilla",
+            "sets": "3x8-10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisää toistoja tai painoa viikoittain"
+          },
+          {
+            "name": "Kapea penkki",
+            "sets": "3x5",
+            "targetKg": 75.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Pystypunnerrus",
+            "sets": "3x6-8",
+            "targetKg": 55.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Dippi",
+            "sets": "3x8-10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisäpaino jos 10 toistoa onnistuu"
+          },
+          {
+            "name": "Sivuviparit",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          }
+        ],
+        "deadDay": [
+          {
+            "name": "Kulmasoutu",
+            "sets": "4x6-8",
+            "targetKg": 70.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Leuanveto",
+            "sets": "4xmax",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisäpaino jos 8+ toistoa"
+          },
+          {
+            "name": "Selän ojennus",
+            "sets": "3x12",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Hauis",
+            "sets": "3x10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Core",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          }
+        ]
+      }
+    },
+    "8": {
+      "visible": false,
+      "done": {
+        "squat": false,
+        "bench": false,
+        "dead": false
+      },
+      "main": {
+        "squat": {
+          "day": "Ma",
+          "lift": "Takakyykky",
+          "sets": "3x3",
+          "targetKg": 100
+        },
+        "bench": {
+          "day": "Ke",
+          "lift": "Penkkipunnerrus",
+          "sets": "3x3",
+          "targetKg": 85
+        },
+        "dead": {
+          "day": "Pe",
+          "lift": "Maastaveto",
+          "sets": "3x3",
+          "targetKg": 100
+        }
+      },
+      "accessory": {
+        "squatDay": [
+          {
+            "name": "Etukyykky",
+            "sets": "3x6",
+            "targetKg": 70.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Romanian DL",
+            "sets": "3x8",
+            "targetKg": 80.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Pohkeet",
+            "sets": "4x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisää painoa kun saat kaikki toistot puhtaasti"
+          },
+          {
+            "name": "Core",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Esim. ab wheel / lankku"
+          }
+        ],
+        "benchDay": [
+          {
+            "name": "Vinopenkki käsipainoilla",
+            "sets": "3x8-10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisää toistoja tai painoa viikoittain"
+          },
+          {
+            "name": "Kapea penkki",
+            "sets": "3x5",
+            "targetKg": 75.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Pystypunnerrus",
+            "sets": "3x6-8",
+            "targetKg": 55.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Dippi",
+            "sets": "3x8-10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisäpaino jos 10 toistoa onnistuu"
+          },
+          {
+            "name": "Sivuviparit",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          }
+        ],
+        "deadDay": [
+          {
+            "name": "Kulmasoutu",
+            "sets": "4x6-8",
+            "targetKg": 70.0,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Leuanveto",
+            "sets": "4xmax",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": "Lisäpaino jos 8+ toistoa"
+          },
+          {
+            "name": "Selän ojennus",
+            "sets": "3x12",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Hauis",
+            "sets": "3x10",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          },
+          {
+            "name": "Core",
+            "sets": "3x15",
+            "targetKg": null,
+            "done": false,
+            "actualKg": null,
+            "note": ""
+          }
+        ]
+      }
+    }
+  },
+  "archive": {}
+}
